@@ -1,9 +1,9 @@
-# Rust 编码规范
+# Rust Coding Specification
 
 - [Overview](./overview.md)
     - [Why you need the Rust coding specification ](./safe-guides/overview/why.md)
     - [Basic conventions of the coding specification](./safe-guides/overview/convention.md)
-- [Code Style](./safe-guides/code_style.md)
+- [Coding Style](./safe-guides/code_style.md)
     - [Naming](./safe-guides/code_style/naming.md)
         - [P.NAM.01 The naming convention for identifiers in the same crate should use a uniform word order](./safe-guides/code_style/naming/P.NAM.01.md)
         - [P.NAM.02 Names for cargo features should not contain meaningless placeholders](./safe-guides/code_style/naming/P.NAM.02.md)
