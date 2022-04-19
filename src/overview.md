@@ -1,9 +1,13 @@
-# Rust Coding Guidelines
+# Overview
 
 [《Rust 编码规范》 中文版](https://rust-coding-guidelines.github.io/rust-coding-guidelines-zh/)
 
 > WIP.See the Chinese version for the full version, the English version is currently being translated from the Chinese version, welcome to participate in the contribution!
 
+## Lists
+
+- [1.1 Why you need the Rust coding specification ?](./overview/why.md)
+- [1.2 Basic conventions of the coding specification](./overview/convention.md)
 
 ## Introduce
 
@@ -29,4 +33,3 @@ It is understood that some companies and organizations within the Rust community
 3. The programming specification terms strive to systematize, easy to apply, easy to check, to help developers improve development efficiency.
 4. give developers a clear and global vision, in the process of developing code can follow a good code specification, rather than wait until the code is written and then through rustfmt and clippy such tools, a line to modify the warning.
 5. The specification is not a tutorial, but the level of developers varies. For some knowledge blind spots and those that may lead to program errors, the specification will also cover.
-
