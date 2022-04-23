@@ -83,3 +83,19 @@ fn get_mut(&mut self, index: K) -> Option<&mut V>;
 unsafe fn get_unchecked(&self, index: K) -> &V;
 unsafe fn get_unchecked_mut(&mut self, index: K) -> &mut V;
 ```
+There is almost no such distinction between `getter` and type conversion ([G.NAM.02](./G.NAM.02.md)). For instance, [`TemDir::path`](https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.path) could be regarded as a `getter`, which represents the filesystem's path of temporary directory, and [`TemDir::into_path`](https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.into_path) is in charge of sending converted data when deleting temporary directory
+to callee.
+
+There would not result for redundancy with naming the method as `path`, because `path` itself is a `getter`, otherwise if you name it as `get_path` or `as_path`.
+
+[`TempDir::path`]: https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.path
+[`TempDir::into_path`]: https://docs.rs/tempdir/0.3.7/tempdir/struct.TempDir.html#method.into_path
+
+Examples from `StandardLibrary`:
+
+- [`std::io::Cursor::get_mut`](https://doc.rust-lang.org/std/io/struct.Cursor.html#method.get_mut)
+- [`std::ptr::Unique::get_mut`](https://doc.rust-lang.org/std/ptr/struct.Unique.html#method.get_mut)
+- [`std::sync::PoisonError::get_mut`](https://doc.rust-lang.org/std/sync/struct.PoisonError.html#method.get_mut)
+- [`std::sync::atomic::AtomicBool::get_mut`](https://doc.rust-lang.org/std/sync/atomic/struct.AtomicBool.html#method.get_mut)
+- [`std::collections::hash_map::OccupiedEntry::get_mut`](https://doc.rust-lang.org/std/collections/hash_map/struct.OccupiedEntry.html#method.get_mut)
+- [`<[T]>::get_unchecked`](https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked)
