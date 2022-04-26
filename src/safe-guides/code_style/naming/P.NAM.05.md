@@ -79,7 +79,7 @@ For `getter` checked in runtime, such as bounds checking, we could consider to a
 fn get(&self, index: K) -> Option<&V>;
 fn get_mut(&mut self, index: K) -> Option<&mut V>;
 // No runtime checking, use to improve performance in some case. 
-// For examplem, when executed in an execution environment,which is impossible to trigger bounds checking.
+// For example, when executed in an execution environment,which is impossible to trigger bounds checking.
 unsafe fn get_unchecked(&self, index: K) -> &V;
 unsafe fn get_unchecked_mut(&mut self, index: K) -> &mut V;
 ```
