@@ -8,16 +8,14 @@ In `rustfmt`, the `comment_width` with `wrap_comments` configuration item can au
 
 **Note**: The `use_small_heuristics` configuration item of `rustfmt` does not include `comment_width`.
 
-**[Examples]**
-
-**[Bad]**
+**[Bad Case]**
 
 ```rust
 // Bad
 // Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
 
-**[Good]**
+**[Good Case]**
 
 When `comment_width=80` and `wrap_comments=true`.
 

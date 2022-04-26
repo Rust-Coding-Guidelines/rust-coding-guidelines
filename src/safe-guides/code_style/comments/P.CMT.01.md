@@ -17,9 +17,7 @@ Don't describe obvious phenomena, and never translate code in natural language a
 3. The natural language used for comments and documentation comments should be consistent.
 4. Rust project documentation should always be built on the `rustdoc` tool. `rustdoc` supports the Markdown format. To make the documentation more beautiful and readable, the documentation comments should use the Markdown format.
 
-**[Examples]**
-
-**[Good]**
+**[Good Case]**
 
 Module Based Documentation Comments. From Rust std `std::vec`:
 
