@@ -168,13 +168,13 @@
 <li>Improve the readability, maintainability, robustness, and portability of code by following Rust language features. </li>
 <li>Improve the standardization and security of Unsafe Rust code writing. </li>
 <li>The programming specification terms strive to systematize, easy to apply, easy to check, to help developers improve development efficiency.</li>
-<li>give developers a clear and global vision, in the process of developing code can follow a good code specification, rather than wait until the code is written and then through rustfmt and clippy such tools, a line to modify the warning.</li>
+<li>Give developers a clear and global vision, in the process of developing code can follow a good code specification, rather than wait until the code is written and then through <code>rustfmt</code> and <code>clippy</code> such tools, a line to modify the warning.</li>
 <li>The specification is not a tutorial, but the level of developers varies. For some knowledge blind spots and those that may lead to program errors, the specification will also cover.</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="11-why-you-need-the-rust-coding-specification-"><a class="header" href="#11-why-you-need-the-rust-coding-specification-">1.1 Why you need the Rust coding specification ?</a></h1>
-<p>When I first learned Rust, I marveled at the sophistication of the tools Rust provides. For example, rustfmt, which automatically formats code, and clippy, which helps you standardize code that is not written properly. They are truly excellent tools. At the time, I didn't think Rust needed to be coded at all like other languages.</p>
-<p>But as I learned more and more about Rust, I came to realize that these tools had a lot of shortcomings and did not cover everything. For example, improper configuration and use of rustfmt can lead to code errors and inability to recognize the semantics of various naming in Rust code; clippy has some false positives or lint is not reasonable, and can not cover to Unsafe Rust and other issues. Developers, especially newcomers, if they rely on rutfmt and clippy for a long time like using a black box, but do not understand the reason behind their lint, just know the reason but not the reason, it is impossible to improve the development efficiency under the premise that the code quality has certain requirements.</p>
-<p>So, rutfmt and clippy are not a panacea. We also need a comprehensive and universal coding specification that also covers tools like rustfmt and clippy, so that the majority of Rust teams can quickly implement Rust and enhance collaboration and trust between teams by standardizing the principles and rules to understand the basic framework for writing authentic Rust code.</p>
+<p>When I first learned Rust, I marveled at the sophistication of the tools Rust provides. For example, <code>rustfmt</code>, which automatically formats code, and <code>clippy</code>, which helps you standardize code that is not written properly. They are truly excellent tools. At the time, I didn't think Rust needed to be coded at all like other languages.</p>
+<p>But as I learned more and more about Rust, I came to realize that these tools had a lot of shortcomings and did not cover everything. For example, improper configuration and use of rustfmt can lead to code errors and inability to recognize the semantics of various naming in Rust code; clippy has some false positives or lint is not reasonable, and can not cover to Unsafe Rust and other issues. Developers, especially newcomers, if they rely on <code>rutfmt</code> and <code>clippy</code> for a long time like using a black box, but do not understand the reason behind their lint, just know the reason but not the reason. it is impossible to improve the development efficiency under the premise that the code quality has certain requirements.</p>
+<p>So, <code>rutfmt</code> and <code>clippy</code> are not a panacea. We also need a comprehensive and universal coding specification that also covers tools like <code>rustfmt</code> and <code>clippy</code>, so that the majority of Rust teams can quickly implement Rust and enhance collaboration and trust between teams by standardizing the principles and rules to understand the basic framework for writing authentic Rust code.</p>
 <h2 id="limitations-of-rustfmt-and-clippy"><a class="header" href="#limitations-of-rustfmt-and-clippy">Limitations of Rustfmt and Clippy</a></h2>
 <h3 id="limitations-of-rustfmt"><a class="header" href="#limitations-of-rustfmt">Limitations of Rustfmt</a></h3>
 <p>Rust has an automatic formatting tool, rustfmt, which helps developers get rid of the manual work of formatting code and increase productivity. However, it does not replace the coding specification to standardize the coding style of Rust code.</p>
@@ -185,7 +185,7 @@
 <li>The configuration items of rustfmt tool are fragmented, and most developers do not understand the meaning of each configuration item.</li>
 <li>rustfmt does not have a coding specification that covers code comments and documentation comments.</li>
 </ol>
-<p>In summary, there is a need to provide a common coding specification so that developers clearly understand what coding style Rust follows overall in terms of naming, formatting and commenting. It will cover the content of rustfmt, but not mechanically extract the rules of rustfmt one by one, but a unified categorization and organization of the rules of rustfmt, to facilitate developers to understand the rules set in rustfmt, and to facilitate the team to form their own code style.</p>
+<p>In summary, there is a particular need to provide a common coding specification so that developers clearly understand what coding style Rust follows overall in terms of naming, formatting and commenting. It will cover the content of rustfmt, but not mechanically extract the rules of rustfmt one by one, but a unified categorization and organization of the rules of rustfmt, to facilitate developers to understand the rules set in rustfmt, and to facilitate the team to form their own code style.</p>
 <h3 id="clippys-limitations"><a class="header" href="#clippys-limitations">Clippy's limitations</a></h3>
 <p>Clippy is a linter for Rust, one of the main components of the Rust ecosystem. It performs additional static checks on developed code, reports problems found and explains how to fix them (sometimes it can even fix them automatically). Using it can be beneficial for Rust beginners and even professionals.</p>
 <p>However, using Clippy does not mean that it can replace coding specifications, and it has many drawbacks: </p>
@@ -410,8 +410,103 @@ to callee.</p>
 <li><a href="https://www.tangramvision.com/blog/making-great-docs-with-rustdoc">Making Great Docs with Rustdoc</a></li>
 <li><a href="https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html">Rust Doc book</a></li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt01-代码能做到自注释文档要干练简洁"><a class="header" href="#pcmt01-代码能做到自注释文档要干练简洁">P.CMT.01 代码能做到自注释，文档要干练简洁</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt02-注释应该有宽度限制"><a class="header" href="#pcmt02-注释应该有宽度限制">P.CMT.02 注释应该有宽度限制</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt01-the-code-can-be-self-annotated-and-the-documentation-should-be-concise"><a class="header" href="#pcmt01-the-code-can-be-self-annotated-and-the-documentation-should-be-concise">P.CMT.01 The code can be self-annotated, and the documentation should be concise</a></h1>
+<p><strong>[Description]</strong></p>
+<p>一、The code can be self-annotated, avoiding redundant ordinary code comments.</p>
+<p>Comments are important, but the best code is documentation itself. Meaningful type, function, and variable names are far better than ambiguous names explained by comments. Comments are used when meaningful type names, function names, and variable names cannot express complete semantics.</p>
+<p>Don't describe obvious phenomena, and never translate code in natural language as comments.</p>
+<p>二、The documentation should be concise.</p>
+<ol>
+<li>The content and terms in the documentation comments should be as short and concise as possible, and should not be too long. Make sure your code is well commented and understandable by others. Good comments convey the context and purpose of the code.</li>
+<li>Comments are always structured around two key points:
+<ul>
+<li>What: Used to describe what the code implement.</li>
+<li>How: Used to describe how to use code your code.</li>
+</ul>
+</li>
+<li>The natural language used for comments and documentation comments should be consistent.</li>
+<li>Rust project documentation should always be built on the <code>rustdoc</code> tool. <code>rustdoc</code> supports the Markdown format. To make the documentation more beautiful and readable, the documentation comments should use the Markdown format.</li>
+</ol>
+<p><strong>[Good Case]</strong></p>
+<p>Module Based Documentation Comments. From Rust std <code>std::vec</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+
+//! # The Rust core allocation and collections library
+//!
+//! This library provides smart pointers and collections for managing
+//! heap-allocated values.
+//!
+//! This library, like libcore, normally doesn’t need to be used directly
+//! since its contents are re-exported in the [`std` crate](../std/index.html).
+//! Crates that use the `#![no_std]` attribute however will typically
+//! not depend on `std`, so they’d use this crate instead.
+//!
+//! ## Boxed values
+//!
+//! The [`Box`] type is a smart pointer type. There can only be one owner of a
+//! [`Box`], and the owner can decide to mutate the contents, which live on the
+//! heap.
+<span class="boring">}
+</span></code></pre></pre>
+<p>General Documentation Comments. From Rust std <code>Vec::new</code> method.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+
+/// Constructs a new, empty `Vec&lt;T&gt;`.
+///
+/// The vector will not allocate until elements are pushed onto it.
+///
+/// # Examples
+///
+/// ```
+/// # #![allow(unused_mut)]
+/// let mut vec: Vec&lt;i32&gt; = Vec::new();
+/// ```
+#[inline]
+#[rustc_const_stable(feature = &quot;const_vec_new&quot;, since = &quot;1.39.0&quot;)]
+#[stable(feature = &quot;rust1&quot;, since = &quot;1.0.0&quot;)]
+pub const fn new() -&gt; Self {
+    Vec { buf: RawVec::NEW, len: 0 }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt02-comments-should-have-a-width-limit"><a class="header" href="#pcmt02-comments-should-have-a-width-limit">P.CMT.02 Comments should have a width limit</a></h1>
+<p><strong>[Description]</strong></p>
+<p>The width of each comment line should not be too long and needs to be set at a certain width, no more than 120, which help improve readability.</p>
+<p>In <code>rustfmt</code>, the <code>comment_width</code> with <code>wrap_comments</code> configuration item can automatically split comments that exceed the width limit into multiple lines.</p>
+<p><strong>Note</strong>: The <code>use_small_heuristics</code> configuration item of <code>rustfmt</code> does not include <code>comment_width</code>.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Bad
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<p>When <code>comment_width=80</code> and <code>wrap_comments=true</code>.</p>
+<p><strong>Note</strong>: Here <code>wrap_comments</code> does not use the default value and needs to be configured to true.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+// Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+// sed do eiusmod tempor incididunt ut labore et dolore
+// magna aliqua. Ut enim ad minim veniam, quis nostrud
+// exercitation ullamco laboris nisi ut aliquip ex ea
+// commodo consequat.
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[rustfmt configuration]</strong></p>
+<table><thead><tr><th>Parameter</th><th>Optional</th><th>stable or not</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#comment_width"><code>comment_width</code></a></td><td>80(default)</td><td>No</td><td>Specify the maximum width allowed for a line of comments</td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#wrap_comments"><code>wrap_comments</code></a></td><td>false(default), true(suggestion)</td><td>No</td><td>Running multi-line comments automatically change to multi-line comments by maximum width</td></tr>
+</tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt03-使用行注释而避免使用块注释"><a class="header" href="#pcmt03-使用行注释而避免使用块注释">P.CMT.03 使用行注释而避免使用块注释</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt04-文件头注释包含版权说明"><a class="header" href="#pcmt04-文件头注释包含版权说明">P.CMT.04 文件头注释包含版权说明</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt05-在注释中使用-fixme-和-todo-来帮助任务协作"><a class="header" href="#pcmt05-在注释中使用-fixme-和-todo-来帮助任务协作">P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作</a></h1>
