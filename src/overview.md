@@ -31,5 +31,5 @@ It is understood that some companies and organizations within the Rust community
 1. Improve the readability, maintainability, robustness, and portability of code by following Rust language features. 
 2. Improve the standardization and security of Unsafe Rust code writing. 
 3. The programming specification terms strive to systematize, easy to apply, easy to check, to help developers improve development efficiency.
-4. give developers a clear and global vision, in the process of developing code can follow a good code specification, rather than wait until the code is written and then through rustfmt and clippy such tools, a line to modify the warning.
+4. Give developers a clear and global vision, in the process of developing code can follow a good code specification, rather than wait until the code is written and then through `rustfmt` and `clippy` such tools, a line to modify the warning.
 5. The specification is not a tutorial, but the level of developers varies. For some knowledge blind spots and those that may lead to program errors, the specification will also cover.
