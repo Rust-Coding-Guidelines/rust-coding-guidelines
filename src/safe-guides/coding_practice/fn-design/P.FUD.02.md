@@ -1,1 +1,1 @@
-# P.FUD.02 函数返回值不要使用 return
+# P.FUD.02 Don't Use `return` for return value

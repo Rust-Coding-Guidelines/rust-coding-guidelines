@@ -1,1 +1,1 @@
-# G.FUD.01 函数参数最长不要超过五个
+# G.FUD.01 Less than 5 function parameters

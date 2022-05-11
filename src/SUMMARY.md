@@ -145,7 +145,7 @@
         - [G.FUD.02 Should input as reference if parameter derives `Copy` and its value inputed by-value is a big number](./safe-guides/coding_practice/fn-design/G.FUD.02.md)
         - [G.FUD.03 Should refactor into customized `struct` or `enum` if there are too many `bool` type's function parameters](./safe-guides/coding_practice/fn-design/G.FUD.03.md)
         - [G.FUD.04 Should input by-value but by-ref if parameter derived `Copy`, and its value is a small enough number](./safe-guides/coding_practice/fn-design/G.FUD.04.md)
-        - [G.FUD.05 Don't always specify `inline(always)` for function](./safe-guides/coding_practice/fn-design/G.FUD.05.md)
+        - [G.FUD.05 Don't always specify `#[inline(always)]` for function](./safe-guides/coding_practice/fn-design/G.FUD.05.md)
         - [G.FUD.06 Parameters Should be compatible with multiple types](./safe-guides/coding_practice/fn-design/G.FUD.06.md)
     - [Generic](./safe-guides/coding_practice/generic.md)
         - [P.GEN.01 用泛型来抽象公共语义](./safe-guides/coding_practice/generic/P.GEN.01.md)

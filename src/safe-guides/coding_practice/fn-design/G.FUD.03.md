@@ -1,1 +1,1 @@
-# G.FUD.03 当函数参数出现太多 bool 类型的参数时，应该考虑将其封装为自定义的结构体或枚举
+# G.FUD.03 Should refactor into customized `struct` or `enum` if there are too many `bool` type's function parameters
