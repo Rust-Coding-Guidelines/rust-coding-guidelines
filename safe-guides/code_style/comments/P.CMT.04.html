@@ -137,7 +137,51 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="pcmt04-文件头注释包含版权说明"><a class="header" href="#pcmt04-文件头注释包含版权说明">P.CMT.04 文件头注释包含版权说明</a></h1>
+                        <h1 id="pcmt04-file-header-comments-include-a-copyright-notice"><a class="header" href="#pcmt04-file-header-comments-include-a-copyright-notice">P.CMT.04 File header comments include a copyright notice</a></h1>
+<p><strong>[Description]</strong></p>
+<p>File header (i.e., module-level) comments should include the copyright notice first. If additional content needs to be added to the file header comments, it can be added under the copyright notice.</p>
+<p>May include:</p>
+<ol>
+<li>A description of the function of the document.</li>
+<li>Author.</li>
+<li>Creation date and last modification date.</li>
+<li>Notes.</li>
+<li>Open source license (e.g., Apache 2.0, BSD, LGPL, GPL).</li>
+<li>Other.</li>
+</ol>
+<p>The format of the copyright notice is as follows:</p>
+<ul>
+<li>中文版：<code>版权所有（c）XXX 技术有限公司 2015-2022</code>。</li>
+<li>English version: <code>Copyright (c) XXX Technologies Co. Ltd. 2015-2022. All rights reserved. Licensed under Apache-2.0.</code></li>
+</ul>
+<p>Its content can be adjusted to participate in the following detailed description:</p>
+<ul>
+<li><code>2015-2022</code> can be modified as needed. 2015 is the year the file was first created and 2022 is the year the file was last modified. It is possible to write only one creation year, so that the copyright notice does not need to be changed if the file is modified frequently.</li>
+<li>For internal use, there is no need to add <code>All rights reserved</code>.</li>
+<li><code>Licensed under Apache-2.0.</code>, if it is open source then you can add the license statement.</li>
+</ul>
+<p>Caution when writing copyright notes:</p>
+<ul>
+<li>Copyright notes should be written from the top of the file header.</li>
+<li>The header comment should contain the &quot;copyright notice&quot; first, followed by the rest of the content.</li>
+<li>Optional content should be added as needed to avoid empty formatting without content.</li>
+<li>Maintain uniform formatting, either by the project or by the larger context.</li>
+<li>Maintain a neat layout, with line breaks aligned.</li>
+</ul>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+// 版权所有（c）XXX 技术有限公司 2015-2022。
+
+// Or
+
+// Good
+// Copyright (c) XXX Technologies Co.Ltd. 2015-2022. 
+// All rights reserved. Licensed under Apache-2.0.
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 

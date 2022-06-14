@@ -507,12 +507,262 @@ pub const fn new() -&gt; Self {
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#comment_width"><code>comment_width</code></a></td><td>80(default)</td><td>No</td><td>Specify the maximum width allowed for a line of comments</td></tr>
 <tr><td><a href="https://rust-lang.github.io/rustfmt/?#wrap_comments"><code>wrap_comments</code></a></td><td>false(default), true(suggestion)</td><td>No</td><td>Running multi-line comments automatically change to multi-line comments by maximum width</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt03-使用行注释而避免使用块注释"><a class="header" href="#pcmt03-使用行注释而避免使用块注释">P.CMT.03 使用行注释而避免使用块注释</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt04-文件头注释包含版权说明"><a class="header" href="#pcmt04-文件头注释包含版权说明">P.CMT.04 文件头注释包含版权说明</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt05-在注释中使用-fixme-和-todo-来帮助任务协作"><a class="header" href="#pcmt05-在注释中使用-fixme-和-todo-来帮助任务协作">P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gcmt01-在公开的返回result类型的函数文档中增加-error-注释"><a class="header" href="#gcmt01-在公开的返回result类型的函数文档中增加-error-注释">G.CMT.01 在公开的返回Result类型的函数文档中增加 Error 注释</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gcmt02-如果公开的api在某些情况下会发生panic则相应文档中需增加-panic-注释"><a class="header" href="#gcmt02-如果公开的api在某些情况下会发生panic则相应文档中需增加-panic-注释">G.CMT.02 如果公开的API在某些情况下会发生Panic，则相应文档中需增加 Panic 注释</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gcmt03-在文档注释中要使用空格代替-tab"><a class="header" href="#gcmt03-在文档注释中要使用空格代替-tab">G.CMT.03 在文档注释中要使用空格代替 tab</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt03-use-line-comments-and-avoid-block-comments"><a class="header" href="#pcmt03-use-line-comments-and-avoid-block-comments">P.CMT.03 Use line comments and avoid block comments</a></h1>
+<p><strong>[Description]</strong></p>
+<p>Try to use line comments (<code>//</code> or <code>///</code>) rather than block comments. This is a convention in the Rust community.</p>
+<p>For documentation comments, use <code>//! </code>, in other cases <code>///</code> is better.</p>
+<p>Note: <code>#! [doc]</code> and <code>#[doc]</code> have a special role in simplifying document comments, and it is not necessary to force them into <code>//! </code> or <code>//</code>.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Bad
+
+/*
+ * Wait for the main task to return, and set the process error code
+ * appropriately.
+ */
+mod tests {
+    //! This module contains tests
+
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<p>When <code>normalize_comments = true</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+
+// Wait for the main task to return, and set the process error code
+// appropriately.
+
+// Good
+// When defining modules using the `mod` keyword, 
+// it is better to use `///` on top of `mod`.
+
+/// This module contains tests
+mod tests {
+    // ...
+}
+
+// Good
+#[doc = &quot;Example item documentation&quot;]
+pub enum Foo {}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>【rustfmt configuration】</strong></p>
+<table><thead><tr><th>Parameter</th><th>Optional</th><th>Stable or not</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#normalize_comments"><code>normalize_comments</code></a></td><td>false(default) true(suggestionn)</td><td>No</td><td>Convert the <code>/**/</code> comment to <code>/</code></td></tr>
+<tr><td><a href="https://rust-lang.github.io/rustfmt/?#normalize_doc_attributes"><code>normalize_doc_attributes</code></a></td><td>false(default)</td><td>No</td><td>Convert the <code>#! [doc]</code> and <code>#[doc]</code> annotations to <code>//! </code> and <code>///</code></td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt04-file-header-comments-include-a-copyright-notice"><a class="header" href="#pcmt04-file-header-comments-include-a-copyright-notice">P.CMT.04 File header comments include a copyright notice</a></h1>
+<p><strong>[Description]</strong></p>
+<p>File header (i.e., module-level) comments should include the copyright notice first. If additional content needs to be added to the file header comments, it can be added under the copyright notice.</p>
+<p>May include:</p>
+<ol>
+<li>A description of the function of the document.</li>
+<li>Author.</li>
+<li>Creation date and last modification date.</li>
+<li>Notes.</li>
+<li>Open source license (e.g., Apache 2.0, BSD, LGPL, GPL).</li>
+<li>Other.</li>
+</ol>
+<p>The format of the copyright notice is as follows:</p>
+<ul>
+<li>中文版：<code>版权所有（c）XXX 技术有限公司 2015-2022</code>。</li>
+<li>English version: <code>Copyright (c) XXX Technologies Co. Ltd. 2015-2022. All rights reserved. Licensed under Apache-2.0.</code></li>
+</ul>
+<p>Its content can be adjusted to participate in the following detailed description:</p>
+<ul>
+<li><code>2015-2022</code> can be modified as needed. 2015 is the year the file was first created and 2022 is the year the file was last modified. It is possible to write only one creation year, so that the copyright notice does not need to be changed if the file is modified frequently.</li>
+<li>For internal use, there is no need to add <code>All rights reserved</code>.</li>
+<li><code>Licensed under Apache-2.0.</code>, if it is open source then you can add the license statement.</li>
+</ul>
+<p>Caution when writing copyright notes:</p>
+<ul>
+<li>Copyright notes should be written from the top of the file header.</li>
+<li>The header comment should contain the &quot;copyright notice&quot; first, followed by the rest of the content.</li>
+<li>Optional content should be added as needed to avoid empty formatting without content.</li>
+<li>Maintain uniform formatting, either by the project or by the larger context.</li>
+<li>Maintain a neat layout, with line breaks aligned.</li>
+</ul>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+// 版权所有（c）XXX 技术有限公司 2015-2022。
+
+// Or
+
+// Good
+// Copyright (c) XXX Technologies Co.Ltd. 2015-2022. 
+// All rights reserved. Licensed under Apache-2.0.
+<span class="boring">}
+</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pcmt05-use-fixme-and-todo-in-comments-to-help-with-task-collaboration"><a class="header" href="#pcmt05-use-fixme-and-todo-in-comments-to-help-with-task-collaboration">P.CMT.05 Use <code>FIXME</code> and <code>TODO</code> in comments to help with task collaboration</a></h1>
+<p><strong>[Description]</strong></p>
+<p>Collaboration can be facilitated by turning on <code>FIXME</code> and <code>TODO</code> in the comments.</p>
+<p>Note: This entry is not suitable for use with <code>rustfmt</code> related configuration items <code>report_fixme</code> and <code>report_todo</code>, which have been removed in <code>rustfmt</code> v2.0.</p>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+// TODO(calebcartwright): consider enabling box_patterns feature gate
+fn annotation_type_for_level(level: Level) -&gt; AnnotationType {
+    match level {
+        Level::Bug | Level::Fatal | Level::Error =&gt; AnnotationType::Error,
+        Level::Warning =&gt; AnnotationType::Warning,
+        Level::Note =&gt; AnnotationType::Note,
+        Level::Help =&gt; AnnotationType::Help,
+        // FIXME(#59346): Not sure how to map these two levels
+        Level::Cancelled | Level::FailureNote =&gt; AnnotationType::Error,
+        Level::Allow =&gt; panic!(&quot;Should not call with Allow&quot;),
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gcmt01-error-comments-need-to-added-the-documentation-of-functions-that-return-result-types-in-the-public"><a class="header" href="#gcmt01-error-comments-need-to-added-the-documentation-of-functions-that-return-result-types-in-the-public">G.CMT.01 Error comments need to added the documentation of functions that return <code>Result</code> types in the public</a></h1>
+<p><strong>[Level]</strong> Suggestion</p>
+<p><strong>[Description]</strong></p>
+<p>In the public (pub) documentation of functions that return <code>Result</code> types, it is recommended to add <code># Error</code> comments to explain what scenarios the function will return what kind of error type, so that users can easily handle errors.</p>
+<p>Description: This rule can be detected by cargo clippy, but it does not warn by default.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::missing_errors_doc)]
+
+<span class="boring">fn main() {
+</span>use std::io;
+// Bad： Clippy will be warned &quot;warning: docs for function returning `Result` missing `# Errors` section&quot;
+pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
+    unimplemented!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::missing_errors_doc)]
+
+<span class="boring">fn main() {
+</span>use std::io;
+// Good：adding normatives Errors documentation comments
+
+/// # Errors
+///
+/// Will return `Err` if `filename` does not exist or the user does not have
+/// permission to read it.
+pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
+    unimplemented!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint detection]</strong></p>
+<table><thead><tr><th>Lint name</th><th>Clippy detectable</th><th>Rustc detectable</th><th>Lint Group</th><th>Default level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc">missing_errors_doc </a></td><td>yes</td><td>no</td><td>Style</td><td>allow</td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gcmt02-if-a-panic-occurs-under-certain-circumstances-in-the-public-api-add-a-panic-comment-to-the-corresponding-document"><a class="header" href="#gcmt02-if-a-panic-occurs-under-certain-circumstances-in-the-public-api-add-a-panic-comment-to-the-corresponding-document">G.CMT.02 If a Panic occurs under certain circumstances in the public API, add a Panic comment to the corresponding document</a></h1>
+<p><strong>[Level]</strong> Requirements</p>
+<p><strong>[Description]</strong></p>
+<p>In the public (pub) function documentation, it is recommended to add <code># Panic</code> comments to explain under what conditions the function will Panic, so that users can pre-process it.</p>
+<p>Description: This rule is detected by cargo clippy. It does not warn by default.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::missing_panics_doc)]
+
+<span class="boring">fn main() {
+</span>// Bad：If do not add Panic relevant comments.`Clippy` will raise error: &quot;warning: docs for function which may panic missing `# Panics` section&quot;。
+pub fn divide_by(x: i32, y: i32) -&gt; i32 {
+    if y == 0 {
+        panic!(&quot;Cannot divide by 0&quot;)
+    } else {
+        x / y
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::missing_panics_doc)]
+
+<span class="boring">fn main() {
+</span>// Good：Added Panic comments
+/// # Panics
+///
+/// Will panic if y is 0
+pub fn divide_by(x: i32, y: i32) -&gt; i32 {
+    if y == 0 {
+        panic!(&quot;Cannot divide by 0&quot;)
+    } else {
+        x / y
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint detect]</strong></p>
+<table><thead><tr><th>Lint name</th><th>Clippy detectable</th><th>Rustc detectable</th><th>Lint Group</th><th>Default level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_panics_doc">missing_panics_doc </a></td><td>yes</td><td>no</td><td>Style</td><td>allow</td></tr>
+</tbody></table>
+<p>Default is <code>allow</code>，But this pricipal need to be set <code>#![warn(clippy::missing_panics_doc)]</code>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gcmt03-use-spaces-in-document-comments-instead-of-tabs"><a class="header" href="#gcmt03-use-spaces-in-document-comments-instead-of-tabs">G.CMT.03 Use spaces in document comments instead of tabs</a></h1>
+<p><strong>[Level]</strong> Suggestion</p>
+<p><strong>[Description]</strong></p>
+<p>Rust code style promotes the use of <strong>four spaces</strong> instead of tabs, and <strong>four spaces</strong> should be used consistently in the documentation comments.</p>
+<p><strong>[Bad Case]</strong></p>
+<p>Tab is used in the following document comments.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Bad：Tab indentation is used in document comments
+///
+/// Struct to hold two strings:
+/// 	- first		one
+/// 	- second	one
+pub struct DoubleString {
+   ///
+   /// 	- First String:
+   /// 		- needs to be inside here
+   first_string: String,
+   ///
+   /// 	- Second String:
+   /// 		- needs to be inside here
+   second_string: String,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good：Four spaces indentation is used in document comments
+///
+/// Struct to hold two strings:
+///     - first        one
+///     - second    one
+pub struct DoubleString {
+   ///
+   ///     - First String:
+   ///         - needs to be inside here
+   first_string: String,
+   ///
+   ///     - Second String:
+   ///         - needs to be inside here
+   second_string: String,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint detect]</strong></p>
+<table><thead><tr><th>Lint name</th><th>Clippy detectable</th><th>Rustc detectable</th><th>Lint Group</th><th>Default level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments">tabs_in_doc_comments </a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
+<tr><td>s</td><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="编码实践"><a class="header" href="#编码实践">编码实践</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="常量"><a class="header" href="#常量">常量</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gcns01-对于科学计算中涉及浮点数近似值的常量宜使用预定义常量"><a class="header" href="#gcns01-对于科学计算中涉及浮点数近似值的常量宜使用预定义常量">G.CNS.01 对于科学计算中涉及浮点数近似值的常量宜使用预定义常量</a></h1>

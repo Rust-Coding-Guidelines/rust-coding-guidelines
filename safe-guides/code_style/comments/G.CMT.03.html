@@ -137,7 +137,58 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="gcmt03-在文档注释中要使用空格代替-tab"><a class="header" href="#gcmt03-在文档注释中要使用空格代替-tab">G.CMT.03 在文档注释中要使用空格代替 tab</a></h1>
+                        <h1 id="gcmt03-use-spaces-in-document-comments-instead-of-tabs"><a class="header" href="#gcmt03-use-spaces-in-document-comments-instead-of-tabs">G.CMT.03 Use spaces in document comments instead of tabs</a></h1>
+<p><strong>[Level]</strong> Suggestion</p>
+<p><strong>[Description]</strong></p>
+<p>Rust code style promotes the use of <strong>four spaces</strong> instead of tabs, and <strong>four spaces</strong> should be used consistently in the documentation comments.</p>
+<p><strong>[Bad Case]</strong></p>
+<p>Tab is used in the following document comments.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Bad：Tab indentation is used in document comments
+///
+/// Struct to hold two strings:
+/// 	- first		one
+/// 	- second	one
+pub struct DoubleString {
+   ///
+   /// 	- First String:
+   /// 		- needs to be inside here
+   first_string: String,
+   ///
+   /// 	- Second String:
+   /// 		- needs to be inside here
+   second_string: String,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good：Four spaces indentation is used in document comments
+///
+/// Struct to hold two strings:
+///     - first        one
+///     - second    one
+pub struct DoubleString {
+   ///
+   ///     - First String:
+   ///         - needs to be inside here
+   first_string: String,
+   ///
+   ///     - Second String:
+   ///         - needs to be inside here
+   second_string: String,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint detect]</strong></p>
+<table><thead><tr><th>Lint name</th><th>Clippy detectable</th><th>Rustc detectable</th><th>Lint Group</th><th>Default level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#tabs_in_doc_comments">tabs_in_doc_comments </a></td><td>yes</td><td>no</td><td>Style</td><td>warn</td></tr>
+<tr><td>s</td><td></td><td></td><td></td><td></td></tr>
+</tbody></table>
 
                     </main>
 

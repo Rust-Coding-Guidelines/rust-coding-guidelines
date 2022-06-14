@@ -137,7 +137,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="gcmt01-在公开的返回result类型的函数文档中增加-error-注释"><a class="header" href="#gcmt01-在公开的返回result类型的函数文档中增加-error-注释">G.CMT.01 在公开的返回Result类型的函数文档中增加 Error 注释</a></h1>
+                        <h1 id="gcmt01-error-comments-need-to-added-the-documentation-of-functions-that-return-result-types-in-the-public"><a class="header" href="#gcmt01-error-comments-need-to-added-the-documentation-of-functions-that-return-result-types-in-the-public">G.CMT.01 Error comments need to added the documentation of functions that return <code>Result</code> types in the public</a></h1>
+<p><strong>[Level]</strong> Suggestion</p>
+<p><strong>[Description]</strong></p>
+<p>In the public (pub) documentation of functions that return <code>Result</code> types, it is recommended to add <code># Error</code> comments to explain what scenarios the function will return what kind of error type, so that users can easily handle errors.</p>
+<p>Description: This rule can be detected by cargo clippy, but it does not warn by default.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::missing_errors_doc)]
+
+<span class="boring">fn main() {
+</span>use std::io;
+// Bad： Clippy will be warned &quot;warning: docs for function returning `Result` missing `# Errors` section&quot;
+pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
+    unimplemented!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::missing_errors_doc)]
+
+<span class="boring">fn main() {
+</span>use std::io;
+// Good：adding normatives Errors documentation comments
+
+/// # Errors
+///
+/// Will return `Err` if `filename` does not exist or the user does not have
+/// permission to read it.
+pub fn read(filename: String) -&gt; io::Result&lt;String&gt; {
+    unimplemented!();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint detection]</strong></p>
+<table><thead><tr><th>Lint name</th><th>Clippy detectable</th><th>Rustc detectable</th><th>Lint Group</th><th>Default level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/index.html#missing_errors_doc">missing_errors_doc </a></td><td>yes</td><td>no</td><td>Style</td><td>allow</td></tr>
+</tbody></table>
 
                     </main>
 

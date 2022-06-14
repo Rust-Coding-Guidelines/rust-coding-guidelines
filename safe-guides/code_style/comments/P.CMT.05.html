@@ -137,7 +137,29 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="pcmt05-在注释中使用-fixme-和-todo-来帮助任务协作"><a class="header" href="#pcmt05-在注释中使用-fixme-和-todo-来帮助任务协作">P.CMT.05 在注释中使用 FIXME 和 TODO 来帮助任务协作</a></h1>
+                        <h1 id="pcmt05-use-fixme-and-todo-in-comments-to-help-with-task-collaboration"><a class="header" href="#pcmt05-use-fixme-and-todo-in-comments-to-help-with-task-collaboration">P.CMT.05 Use <code>FIXME</code> and <code>TODO</code> in comments to help with task collaboration</a></h1>
+<p><strong>[Description]</strong></p>
+<p>Collaboration can be facilitated by turning on <code>FIXME</code> and <code>TODO</code> in the comments.</p>
+<p>Note: This entry is not suitable for use with <code>rustfmt</code> related configuration items <code>report_fixme</code> and <code>report_todo</code>, which have been removed in <code>rustfmt</code> v2.0.</p>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good
+// TODO(calebcartwright): consider enabling box_patterns feature gate
+fn annotation_type_for_level(level: Level) -&gt; AnnotationType {
+    match level {
+        Level::Bug | Level::Fatal | Level::Error =&gt; AnnotationType::Error,
+        Level::Warning =&gt; AnnotationType::Warning,
+        Level::Note =&gt; AnnotationType::Note,
+        Level::Help =&gt; AnnotationType::Help,
+        // FIXME(#59346): Not sure how to map these two levels
+        Level::Cancelled | Level::FailureNote =&gt; AnnotationType::Error,
+        Level::Allow =&gt; panic!(&quot;Should not call with Allow&quot;),
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
