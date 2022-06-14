@@ -1,1 +1,1 @@
-# G.FUD.06 函数参数应该考虑兼容多种类型
+# G.FUD.06 Parameters Should be compatible with multiple types

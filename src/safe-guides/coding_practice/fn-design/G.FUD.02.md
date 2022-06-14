@@ -1,1 +1,1 @@
-# G.FUD.02 当函数参数实现了 Copy，并且是按值传入，如果值可能会太大，则宜考虑按引用传递
+# G.FUD.02 Should input as reference if parameter derives `Copy` and its value inputed by-value is a big number

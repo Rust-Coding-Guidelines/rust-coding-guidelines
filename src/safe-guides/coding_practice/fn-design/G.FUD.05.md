@@ -1,1 +1,1 @@
-# G.FUD.05 不要总是为函数指定 inline(always)
+# G.FUD.05 Don't always specify `#[inline(always)]` for function
