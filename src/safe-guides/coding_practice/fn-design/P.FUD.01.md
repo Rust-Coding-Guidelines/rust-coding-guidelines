@@ -1,11 +1,13 @@
 # P.FUD.01 Should rebind variables which pass into closure
 
 **[Description]**
+
 By default, closure captures environment variables with `borrow`, or it is also allowed to pass environment variables into closure with `move` keyword.
 
 It is more readable to rebind and regroup these variables which pass into closure.
 
 **[Bad Case]**
+
 ```rust
 use std::rc::Rc;
 let num1 = Rc::new(1);
@@ -23,6 +25,7 @@ let closure = {
 
 
 **[Good Case]**
+
 ```rust 
 use std::rc::Rc;
 
