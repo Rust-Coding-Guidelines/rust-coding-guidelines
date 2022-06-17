@@ -859,10 +859,10 @@ pub struct DoubleString {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="集合容器"><a class="header" href="#集合容器">集合容器</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pclt01-创建hashmapvecdeque时可以预先分配大约足够的容量来避免后续操作中产生多次分配"><a class="header" href="#pclt01-创建hashmapvecdeque时可以预先分配大约足够的容量来避免后续操作中产生多次分配">P.CLT.01 创建HashMap、VecDeque时，可以预先分配大约足够的容量来避免后续操作中产生多次分配</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gclt01-非必要情况下不要使用linkedlist而用vec或vecdeque代替"><a class="header" href="#gclt01-非必要情况下不要使用linkedlist而用vec或vecdeque代替">G.CLT.01 非必要情况下，不要使用LinkedList，而用Vec或VecDeque代替</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="函数设计"><a class="header" href="#函数设计">函数设计</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="function-design"><a class="header" href="#function-design">Function Design</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pfud01-should-rebind-variables-which-pass-into-closure"><a class="header" href="#pfud01-should-rebind-variables-which-pass-into-closure">P.FUD.01 Should rebind variables which pass into closure</a></h1>
-<p><strong>[Description]</strong>
-By default, closure captures environment variables with <code>borrow</code>, or it is also allowed to pass environment variables into closure with <code>move</code> keyword.</p>
+<p><strong>[Description]</strong></p>
+<p>By default, closure captures environment variables with <code>borrow</code>, or it is also allowed to pass environment variables into closure with <code>move</code> keyword.</p>
 <p>It is more readable to rebind and regroup these variables which pass into closure.</p>
 <p><strong>[Bad Case]</strong></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -901,8 +901,8 @@ let closure = move || {
 <span class="boring">}
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pfud02-dont-use-return-for-return-value"><a class="header" href="#pfud02-dont-use-return-for-return-value">P.FUD.02 Don't Use <code>return</code> for return value</a></h1>
-<p><strong>[Description]</strong>
-In such that function would automatically return the value of last expression in Rust, it is not required to use <code>return</code> explicitly.</p>
+<p><strong>[Description]</strong></p>
+<p>In such that function would automatically return the value of last expression in Rust, it is not required to use <code>return</code> explicitly.</p>
 <p>Only when it is necessary to return a value in procedure of function, should use <code>return</code> explicitly.</p>
 <p><strong>[Bad Case]</strong></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -929,7 +929,82 @@ In such that function would automatically return the value of last expression in
 <span class="boring">}
 </span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud01-less-than-5-function-parameters"><a class="header" href="#gfud01-less-than-5-function-parameters">G.FUD.01 Less than 5 function parameters</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p>In order to improve readability of code, it's better to set less than 5 function's parameters.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Color;
+// Not Good
+fn foo(x: f32, y: f32, name: &amp;str, c: Color, w: u32, h: u32, a: u32, b: u32) {
+    // ..
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<p>Refine function's parameters as possible.</p>
+<pre><pre class="playground"><code class="language-rust">struct Color;
+// Good: use const generic here to receive multiple u32 typed parameters afterward.
+// use tuple to refine 2~3 parameters as one.
+fn foo&lt;T, const N: usize&gt;(x: (f32, f32), name: &amp;str, c: Color, last: [T;N]) {
+    ;
+}
+
+fn main() {
+    let arr = [1u32, 2u32];
+    foo((1.0f32, 2.0f32), &quot;hello&quot;, Color, arr);
+    let arr = [1.0f32, 2.0f32, 3.0f32];
+    foo((1.0f32, 2.0f32), &quot;hello&quot;, Color, arr);
+}
+</code></pre></pre>
+<p><strong>[Lint Check]</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy check</th><th>Rustc Check</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#too_many_arguments">too_many_arguments</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
+</tbody></table>
+<p>This lint corresponds to the following configuration of <code>clippy.toml</code>:</p>
+<pre><code class="language-toml"># less than 5 parameters
+too-many-arguments-threshold=5
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud02-should-input-as-reference-if-parameter-derives-copy-and-its-value-inputed-by-value-is-a-big-number"><a class="header" href="#gfud02-should-input-as-reference-if-parameter-derives-copy-and-its-value-inputed-by-value-is-a-big-number">G.FUD.02 Should input as reference if parameter derives <code>Copy</code> and its value inputed by-value is a big number</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p>By-value inputed parameters may emerge unnecessary <code>memcpy</code>, which could kill performance.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::large_types_passed_by_value)]
+
+<span class="boring">fn main() {
+</span>#[derive(Clone, Copy)]
+struct TooLarge([u8; 2048]);
+
+// Not Good
+fn foo(v: TooLarge) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::large_types_passed_by_value)]
+
+<span class="boring">fn main() {
+</span>#[derive(Clone, Copy)]
+struct TooLarge([u8; 2048]);
+
+// Good
+fn foo(v: &amp;TooLarge) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint Check]</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy check</th><th>Rustc check</th><th>Lint Group</th><th>Level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#large_types_passed_by_value">large_types_passed_by_value</a></td><td>yes</td><td>no</td><td>pedanic</td><td>allow</td></tr>
+</tbody></table>
+<p>This lint corresponds to the following configuration of <code>clippy.toml</code></p>
+<pre><code class="language-toml"># if function is an exported api, then the lint would not be triggered, which aims to prevent devastated change for api. the default is true.
+avoid-breaking-exported-api=true
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud03-should-refactor-into-customized-struct-or-enum-if-there-are-too-many-bool-types-function-parameters"><a class="header" href="#gfud03-should-refactor-into-customized-struct-or-enum-if-there-are-too-many-bool-types-function-parameters">G.FUD.03 Should refactor into customized <code>struct</code> or <code>enum</code> if there are too many <code>bool</code> type's function parameters</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud04-should-input-by-value-but-by-ref-if-parameter-derived-copy-and-its-value-is-a-small-enough-number"><a class="header" href="#gfud04-should-input-by-value-but-by-ref-if-parameter-derived-copy-and-its-value-is-a-small-enough-number">G.FUD.04 Should input by-value but by-ref if parameter derived <code>Copy</code>, and its value is a small enough number</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud05-dont-always-specify-inlinealways-for-function"><a class="header" href="#gfud05-dont-always-specify-inlinealways-for-function">G.FUD.05 Don't always specify <code>#[inline(always)]</code> for function</a></h1>
@@ -984,7 +1059,7 @@ In such that function would automatically return the value of last expression in
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gmod03-导入模块不要随便使用-通配符"><a class="header" href="#gmod03-导入模块不要随便使用-通配符">G.MOD.03 导入模块不要随便使用 通配符*</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gmod04-一个项目中应该避免使用不同的模块布局风格"><a class="header" href="#gmod04-一个项目中应该避免使用不同的模块布局风格">G.MOD.04 一个项目中应该避免使用不同的模块布局风格</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gmod05-不要在私有模块中设置其内部类型或函数方法为-pubcrate"><a class="header" href="#gmod05-不要在私有模块中设置其内部类型或函数方法为-pubcrate">G.MOD.05 不要在私有模块中设置其内部类型或函数方法为 pub(crate)</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="包管理"><a class="header" href="#包管理">包管理</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cargo-package-management"><a class="header" href="#cargo-package-management">Cargo package management</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pcar01-应该尽量把项目划分为合理的-crate-组合"><a class="header" href="#pcar01-应该尽量把项目划分为合理的-crate-组合">P.CAR.01 应该尽量把项目划分为合理的 crate 组合</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pcar02-不要滥用-features"><a class="header" href="#pcar02-不要滥用-features">P.CAR.02 不要滥用 Features</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pcar03-使用-cargo-features-来代替---cfg-条件编译参数"><a class="header" href="#pcar03-使用-cargo-features-来代替---cfg-条件编译参数">P.CAR.03 使用 cargo features 来代替 --cfg 条件编译参数</a></h1>
@@ -1024,7 +1099,7 @@ In such that function would automatically return the value of last expression in
 <div style="break-before: page; page-break-before: always;"></div><h1 id="无锁"><a class="header" href="#无锁">无锁</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pmthlkf01-除非必要否则建议使用同步锁"><a class="header" href="#pmthlkf01-除非必要否则建议使用同步锁">P.MTH.LKF.01 除非必要，否则建议使用同步锁</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pmthlkf02-使用无锁编程时需要合理选择内存顺序"><a class="header" href="#pmthlkf02-使用无锁编程时需要合理选择内存顺序">P.MTH.LKF.02 使用无锁编程时，需要合理选择内存顺序</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="异步编程"><a class="header" href="#异步编程">异步编程</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="async"><a class="header" href="#async">Async</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pasy01-异步编程并不适合所有场景计算密集型场景应该考虑同步编程"><a class="header" href="#pasy01-异步编程并不适合所有场景计算密集型场景应该考虑同步编程">P.ASY.01 异步编程并不适合所有场景，计算密集型场景应该考虑同步编程</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gasy01-在-async-块或函数中调用-async-函数或闭包请不要忘记添加await"><a class="header" href="#gasy01-在-async-块或函数中调用-async-函数或闭包请不要忘记添加await">G.ASY.01 在 async 块或函数中调用 async 函数或闭包请不要忘记添加.await</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gasy02-在跨-await-调用中需要对其持有的同步互斥锁进行处理"><a class="header" href="#gasy02-在跨-await-调用中需要对其持有的同步互斥锁进行处理">G.ASY.02 在跨 await 调用中，需要对其持有的同步互斥锁进行处理</a></h1>

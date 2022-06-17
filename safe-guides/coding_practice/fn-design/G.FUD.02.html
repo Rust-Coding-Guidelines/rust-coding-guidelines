@@ -138,6 +138,43 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="gfud02-should-input-as-reference-if-parameter-derives-copy-and-its-value-inputed-by-value-is-a-big-number"><a class="header" href="#gfud02-should-input-as-reference-if-parameter-derives-copy-and-its-value-inputed-by-value-is-a-big-number">G.FUD.02 Should input as reference if parameter derives <code>Copy</code> and its value inputed by-value is a big number</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p>By-value inputed parameters may emerge unnecessary <code>memcpy</code>, which could kill performance.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::large_types_passed_by_value)]
+
+<span class="boring">fn main() {
+</span>#[derive(Clone, Copy)]
+struct TooLarge([u8; 2048]);
+
+// Not Good
+fn foo(v: TooLarge) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::large_types_passed_by_value)]
+
+<span class="boring">fn main() {
+</span>#[derive(Clone, Copy)]
+struct TooLarge([u8; 2048]);
+
+// Good
+fn foo(v: &amp;TooLarge) {}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint Check]</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy check</th><th>Rustc check</th><th>Lint Group</th><th>Level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#large_types_passed_by_value">large_types_passed_by_value</a></td><td>yes</td><td>no</td><td>pedanic</td><td>allow</td></tr>
+</tbody></table>
+<p>This lint corresponds to the following configuration of <code>clippy.toml</code></p>
+<pre><code class="language-toml"># if function is an exported api, then the lint would not be triggered, which aims to prevent devastated change for api. the default is true.
+avoid-breaking-exported-api=true
+</code></pre>
 
                     </main>
 

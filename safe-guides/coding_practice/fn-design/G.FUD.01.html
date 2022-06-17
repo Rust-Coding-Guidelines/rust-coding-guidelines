@@ -138,6 +138,44 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="gfud01-less-than-5-function-parameters"><a class="header" href="#gfud01-less-than-5-function-parameters">G.FUD.01 Less than 5 function parameters</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p>In order to improve readability of code, it's better to set less than 5 function's parameters.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Color;
+// Not Good
+fn foo(x: f32, y: f32, name: &amp;str, c: Color, w: u32, h: u32, a: u32, b: u32) {
+    // ..
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<p>Refine function's parameters as possible.</p>
+<pre><pre class="playground"><code class="language-rust">struct Color;
+// Good: use const generic here to receive multiple u32 typed parameters afterward.
+// use tuple to refine 2~3 parameters as one.
+fn foo&lt;T, const N: usize&gt;(x: (f32, f32), name: &amp;str, c: Color, last: [T;N]) {
+    ;
+}
+
+fn main() {
+    let arr = [1u32, 2u32];
+    foo((1.0f32, 2.0f32), &quot;hello&quot;, Color, arr);
+    let arr = [1.0f32, 2.0f32, 3.0f32];
+    foo((1.0f32, 2.0f32), &quot;hello&quot;, Color, arr);
+}
+</code></pre></pre>
+<p><strong>[Lint Check]</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy check</th><th>Rustc Check</th><th>Lint Group</th><th>level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#too_many_arguments">too_many_arguments</a></td><td>yes</td><td>no</td><td>complexity</td><td>warn</td></tr>
+</tbody></table>
+<p>This lint corresponds to the following configuration of <code>clippy.toml</code>:</p>
+<pre><code class="language-toml"># less than 5 parameters
+too-many-arguments-threshold=5
+</code></pre>
 
                     </main>
 
