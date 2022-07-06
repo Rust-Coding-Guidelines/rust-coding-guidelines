@@ -1,1 +1,1 @@
-# P.NAM.01 同一个crate中标识符的命名规则应该使用统一的词序
+# P.NAM.01 The naming convention for identifiers in the same crate should use a uniform word order

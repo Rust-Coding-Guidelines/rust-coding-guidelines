@@ -1,1 +1,1 @@
-# P.NAM.02 为 cargo feature 命名时不应含有无意义的占位词
+# P.NAM.02 Names for cargo features should not contain meaningless placeholders

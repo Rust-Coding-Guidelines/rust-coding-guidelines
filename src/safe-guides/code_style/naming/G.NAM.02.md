@@ -1,1 +1,1 @@
-# G.NAM.02 类型转换函数命名需要遵循所有权语义
+# G.NAM.02 Type conversion function naming needs to follow ownership semantics

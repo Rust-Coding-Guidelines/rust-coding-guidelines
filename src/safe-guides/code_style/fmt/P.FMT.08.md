@@ -1,1 +1,1 @@
-# P.FMT.08 函数参数超过五个或导入模块个数超过四个需换行
+# P.FMT.08 Line feeds for functions with more than five parameters or imported modules with more than four parameters

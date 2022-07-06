@@ -1,1 +1,1 @@
-# P.NAM.07 避免使用语言内置保留字、关键字、内置类型和trait等特殊名称
+# P.NAM.07 Avoid using special names such as language built-in reserved words, keywords, built-in types and traits

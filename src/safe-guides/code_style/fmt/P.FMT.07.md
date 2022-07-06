@@ -1,1 +1,1 @@
-# P.FMT.07 枚举变体和结构体字段都应左对齐
+# P.FMT.07 Both enumeration variants and structure fields should be left aligned
