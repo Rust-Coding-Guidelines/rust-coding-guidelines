@@ -1,1 +1,1 @@
-# P.FMT.05 存在多个标识符时应该保持块状（Block）缩进
+# P.FMT.05 Block indentation should be maintained when multiple identifiers are present

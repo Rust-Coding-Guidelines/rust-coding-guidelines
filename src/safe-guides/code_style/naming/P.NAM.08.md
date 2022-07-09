@@ -1,1 +1,1 @@
-# P.NAM.08 避免在变量的命名中添加类型标识
+# P.NAM.08 Avoid adding type identifiers to the naming of variables

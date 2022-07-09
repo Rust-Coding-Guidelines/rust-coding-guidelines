@@ -1,1 +1,1 @@
-# P.FMT.04 语言项（Item) 定义时左花括号（brace）位置应该与语言项保持同一行
+# P.FMT.04 Language items should be defined with the left  braces position on the same line 

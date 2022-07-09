@@ -1,1 +1,1 @@
-# G.STV.01 不宜直接使用可变静态变量作为全局变量
+# G.STV.01 Shouldn't use `static mut` as global variable directly

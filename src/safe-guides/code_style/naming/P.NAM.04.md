@@ -1,1 +1,1 @@
-# P.NAM.04 作用域越大命名越精确，反之应简短
+# P.NAM.04 The larger the scope, the more precise the naming, and the opposite should be short

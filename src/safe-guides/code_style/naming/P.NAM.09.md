@@ -1,1 +1,1 @@
-# P.NAM.09 定义全局静态变量时需加前缀G_以便和常量有所区分
+# P.NAM.09 Global static variables should be defined with the prefix `G_` to distinguish them from constants
