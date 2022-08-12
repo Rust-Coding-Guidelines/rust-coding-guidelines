@@ -138,6 +138,35 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="gfud05-dont-always-specify-inlinealways-for-function"><a class="header" href="#gfud05-dont-always-specify-inlinealways-for-function">G.FUD.05 Don't always specify <code>#[inline(always)]</code> for function</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p><code>inline</code> could imporve performance, but also increase compilation time and size. You have to make a tradeoff among Performance, Compilation time and Compilation size in Rust, and it is recommended to use <code>inline</code> on demand.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::inline_always)]
+
+<span class="boring">fn main() {
+</span>// Not Good
+#[inline(always)]
+fn not_quite_hot_code(..) { ... }
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Exception]</strong></p>
+<p>Use <code>inline</code> on demand. i.e. it is obvious that one function is called frequently, and you could use <code>inline</code> for it to improve performance.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good: that function is often called for recycle buffer memory, so use `inline` maximize its performance.
+pub fn buf_recycle(buf_id: usize) {
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint Check]</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy check</th><th>Rustc check</th><th>Lint Group</th><th>Level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#inline_always">inline_always</a></td><td>yes</td><td>no</td><td>pedanic</td><td>allow</td></tr>
+</tbody></table>
 
                     </main>
 

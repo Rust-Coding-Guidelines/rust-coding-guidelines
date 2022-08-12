@@ -138,6 +138,64 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="gfud06-parameters-should-be-compatible-with-multiple-types"><a class="header" href="#gfud06-parameters-should-be-compatible-with-multiple-types">G.FUD.06 Parameters Should be compatible with multiple types</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p>It could enable parameters to be compatible with multiple types, which is benificial for the scalability of code.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">// Not Good
+fn  three_vowels(word: &amp;String) -&gt; bool {
+    let mut vowel_count = 0;
+    for c in word.chars() {
+        match c {
+            'a' | 'e' | 'i' | 'o' | 'u' =&gt; {
+                vowel_count += 1;
+                if vowel_count &gt;= 3 {
+                    return true
+                }
+            }
+            _ =&gt; voweled_count = 0
+        }
+    }
+    false
+}
+
+fn main() {
+    let sentence_string = &quot;Once upon a time, there was a friendly curious crab named Ferris&quot;.to_string();
+    for word in sentence_string.split(' ') {
+        if three_vowels(word.to_string()) {
+            println!(&quot;{} has three consecutive vowels!&quot;, word);
+        }
+    }
+}
+</code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">// Good: Three types could be accepted as parameter here: &amp;String / &amp;str / &amp;'static str.
+fn three_vowels(word: &amp;str) -&gt; bool {
+    let mut vowel_count = 0;
+    for c in word.chars() {
+        match c {
+            'a' | 'e' | 'i' | 'o' | 'u' =&gt; {
+                vowel_count += 1;
+                if vowel_count &gt;= 3 {
+                    return true
+                }
+            }
+            _ =&gt; vowel_count = 0
+        }
+    }
+    false
+}
+
+fn main() {
+    let sentence_string = 
+        &quot;Once upon a time, there was a friendly curious crab named Ferris&quot;.to_string();
+    for word in sentence_string.split(' ') {
+        if three_vowels(word) {
+            println!(&quot;{} has three consecutive vowels!&quot;, word);
+        }
+    }
+}
+</code></pre></pre>
 
                     </main>
 

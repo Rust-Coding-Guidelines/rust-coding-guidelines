@@ -1120,7 +1120,94 @@ trivial-copy-size-limit=None
 <p><strong>Tips:</strong> this lint would not consider the cases using pointer, just like example in <strong>[Exception]</strong> part. </p>
 <p>Reference of <strong>[Exception]</strong> example: <a href="https://github.com/rust-lang/rust-clippy/issues/5953">rust-clippy/issues/5953</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud05-dont-always-specify-inlinealways-for-function"><a class="header" href="#gfud05-dont-always-specify-inlinealways-for-function">G.FUD.05 Don't always specify <code>#[inline(always)]</code> for function</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p><code>inline</code> could imporve performance, but also increase compilation time and size. You have to make a tradeoff among Performance, Compilation time and Compilation size in Rust, and it is recommended to use <code>inline</code> on demand.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(clippy::inline_always)]
+
+<span class="boring">fn main() {
+</span>// Not Good
+#[inline(always)]
+fn not_quite_hot_code(..) { ... }
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Exception]</strong></p>
+<p>Use <code>inline</code> on demand. i.e. it is obvious that one function is called frequently, and you could use <code>inline</code> for it to improve performance.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Good: that function is often called for recycle buffer memory, so use `inline` maximize its performance.
+pub fn buf_recycle(buf_id: usize) {
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>[Lint Check]</strong></p>
+<table><thead><tr><th>lint name</th><th>Clippy check</th><th>Rustc check</th><th>Lint Group</th><th>Level</th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang.github.io/rust-clippy/master/#inline_always">inline_always</a></td><td>yes</td><td>no</td><td>pedanic</td><td>allow</td></tr>
+</tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gfud06-parameters-should-be-compatible-with-multiple-types"><a class="header" href="#gfud06-parameters-should-be-compatible-with-multiple-types">G.FUD.06 Parameters Should be compatible with multiple types</a></h1>
+<p><strong>[Level] Advice</strong></p>
+<p><strong>[Description]</strong></p>
+<p>It could enable parameters to be compatible with multiple types, which is benificial for the scalability of code.</p>
+<p><strong>[Bad Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">// Not Good
+fn  three_vowels(word: &amp;String) -&gt; bool {
+    let mut vowel_count = 0;
+    for c in word.chars() {
+        match c {
+            'a' | 'e' | 'i' | 'o' | 'u' =&gt; {
+                vowel_count += 1;
+                if vowel_count &gt;= 3 {
+                    return true
+                }
+            }
+            _ =&gt; voweled_count = 0
+        }
+    }
+    false
+}
+
+fn main() {
+    let sentence_string = &quot;Once upon a time, there was a friendly curious crab named Ferris&quot;.to_string();
+    for word in sentence_string.split(' ') {
+        if three_vowels(word.to_string()) {
+            println!(&quot;{} has three consecutive vowels!&quot;, word);
+        }
+    }
+}
+</code></pre></pre>
+<p><strong>[Good Case]</strong></p>
+<pre><pre class="playground"><code class="language-rust">// Good: Three types could be accepted as parameter here: &amp;String / &amp;str / &amp;'static str.
+fn three_vowels(word: &amp;str) -&gt; bool {
+    let mut vowel_count = 0;
+    for c in word.chars() {
+        match c {
+            'a' | 'e' | 'i' | 'o' | 'u' =&gt; {
+                vowel_count += 1;
+                if vowel_count &gt;= 3 {
+                    return true
+                }
+            }
+            _ =&gt; vowel_count = 0
+        }
+    }
+    false
+}
+
+fn main() {
+    let sentence_string = 
+        &quot;Once upon a time, there was a friendly curious crab named Ferris&quot;.to_string();
+    for word in sentence_string.split(' ') {
+        if three_vowels(word) {
+            println!(&quot;{} has three consecutive vowels!&quot;, word);
+        }
+    }
+}
+</code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="泛型"><a class="header" href="#泛型">泛型</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pgen01-用泛型来抽象公共语义"><a class="header" href="#pgen01-用泛型来抽象公共语义">P.GEN.01 用泛型来抽象公共语义</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pgen02-不要随便使用-impl-trait-语法替代泛型限定"><a class="header" href="#pgen02-不要随便使用-impl-trait-语法替代泛型限定">P.GEN.02 不要随便使用 impl Trait 语法替代泛型限定</a></h1>
